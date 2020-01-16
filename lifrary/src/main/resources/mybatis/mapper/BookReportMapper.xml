@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <mapper namespace="ksmart.pentagon.mypage.BookReportMapper">
+  	<resultMap type="ksmart.pentagon.vo.BookReport" id="bookReport">
+	    <result column="b_report_code" property="bReportCode"/>
+	    <result column="l_code" property="lCode"/>
+	    <result column="u_id" property="uId"/>
+	    <result column="u_name" property="uName"/>
+	    <result column="bi_isbn" property="biIsbn"/>
+	    <result column="bi_img" property="biImg"/>
+	    <result column="b_report_title" property="bReportTitle"/>
+	    <result column="b_report_content" property="bReportContent"/>
+	    <result column="b_report_open" property="bReportOpen"/>
+	    <result column="b_report_star" property="bReportStar"/>
+	    <result column="b_page_view" property="bPageView"/>
+	    <result column="b_report_date" property="bReportDate"/>
+	</resultMap>
+	<select id="bookReportCnt" parameterType="java.util.HashMap" resultType="java.lang.Integer">
+		SELECT 
+			COUNT(1)
+		FROM 
+			book_report AS br
+		WHERE 
+			br.l_code = #{libNum}
+		AND 
+			br.b_report_open = 'O'	
+		<if test="sk != null and sk neq ''.toString() and sv != null and sv neq ''.toString()"> 
+			AND CONCAT ('br.',${sk}) Like CONCAT ('%',#{sv},'%')		
+		</if>
+		<if test="svDate != null and svDate neq ''.toString()">
+			<![CDATA[ 
+				AND br.b_report_date >= #{svDate}
+			]]>	
+		</if>
+		ORDER BY br.b_report_date  DESC	
+	</select>
+	<select id="bookReportList" resultMap="bookReport" parameterType="java.util.HashMap">
+  		SELECT 
+			br.b_report_code
+			, u.u_name
+			, bi.bi_img
+			, br.b_report_title
+			, br.b_report_content
+			, br.b_page_view
+			, br.b_report_date
+		FROM 
+			book_report AS br
+		INNER JOIN
+			book_information AS bi
+		ON 
+			br.bi_isbn = bi.bi_isbn
+		INNER JOIN
+			user AS u
+		ON
+			br.u_id = u.u_id	
+		WHERE 
+			br.l_code = #{libNum}
+		AND 
+			br.b_report_open = 'O'		
+		<if test="sk != null and sk neq ''.toString() and sv != null and sv neq ''.toString()"> 
+			AND CONCAT ('br.',${sk}) Like CONCAT ('%',#{sv},'%')		
+		</if>
+		<if test="svDate != null and svDate neq ''.toString()">
+			<![CDATA[ 
+				AND br.b_report_date >= #{svDate}
+			]]>	
+		</if>
+		<if test="startRow neq null and rowPerPage neq null"> 
+	            ORDER BY br.b_report_date  DESC
+	            LIMIT #{startRow},#{rowPerPage}
+        </if>	
+ 	</select>
+ 	<select id="myBookReportCnt" parameterType="java.util.HashMap" resultType="java.lang.Integer">
+		SELECT 
+			COUNT(1)
+		FROM 
+			book_report AS br
+		WHERE 
+			br.l_code = #{libNum}
+		AND 
+			br.u_id = #{uId}
+		<if test="sk != null and sk neq ''.toString() and sv != null and sv neq ''.toString()"> 
+			AND CONCAT ('br.',${sk}) Like CONCAT ('%',#{sv},'%')		
+		</if>
+		<if test="open != null and open neq ''.toString()"> 
+			AND br.b_report_open = #{open}		
+		</if>
+		<if test="svDate != null and svDate neq ''.toString()">
+			<![CDATA[ 
+				AND br.b_report_date >= #{svDate}
+			]]>	
+		</if>
+		ORDER BY br.b_report_date  DESC	
+	</select>
+	<select id="myBookReportList" resultMap="bookReport" parameterType="java.util.HashMap">
+  		SELECT 
+			br.b_report_code
+			, u.u_name
+			, bi.bi_img
+			, br.b_report_title
+			, br.b_report_content
+			, br.b_page_view
+			, br.b_report_date
+		FROM 
+			book_report AS br
+		INNER JOIN
+			book_information AS bi
+		ON 
+			br.bi_isbn = bi.bi_isbn
+		INNER JOIN
+			user AS u
+		ON
+			br.u_id = u.u_id	
+		WHERE 
+			br.l_code = #{libNum}
+		AND 
+			br.u_id = #{uId}		
+		<if test="sk != null and sk neq ''.toString() and sv != null and sv neq ''.toString()"> 
+			AND CONCAT ('br.',${sk}) Like CONCAT ('%',#{sv},'%')		
+		</if>
+		<if test="open != null and open neq ''.toString()"> 
+			AND br.b_report_open = #{open}		
+		</if>
+		<if test="svDate != null and svDate neq ''.toString()">
+			<![CDATA[ 
+				AND br.b_report_date >= #{svDate}
+			]]>	
+		</if>
+		<if test="startRow neq null and rowPerPage neq null"> 
+	            ORDER BY br.b_report_date  DESC
+	            LIMIT #{startRow},#{rowPerPage}
+        </if>	
+ 	</select>
+  </mapper>

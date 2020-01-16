@@ -1,7 +1,14 @@
 package ksmart.pentagon.mypage;
 
+import java.util.Map;
+
+import javax.servlet.http.HttpSession;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 /**
  * @file BookReportController.java
@@ -11,15 +18,33 @@ import org.springframework.web.bind.annotation.GetMapping;
  */
 @Controller
 public class BookReportController {
-
+	
+	@Autowired private BookReportService bookReportService;
+	
 	/**
 	 * @brief 독후감 공유 리스트
 	 * @return /librarypage/bookReport/bookReportSearchList
 	 * @author 최지혜
 	 */
 	@GetMapping("/lifrary/bookReportSearchList")
-	public String bookReportSearchList() {
+	public String bookReportSearchList(@RequestParam Map<String, Object> params
+									   ,@RequestParam(value = "currentPage", required = false, defaultValue = "1") String currentPageStr
+			                           ,HttpSession session, Model model) {
 
+		String libNum = (String) session.getAttribute("LIBNUM");
+		params.put("libNum", libNum);
+	
+		Map<String, Object> map = bookReportService.bookReportList(params, currentPageStr);
+
+		model.addAttribute("bookReporList", map.get("bookReporList"));
+		model.addAttribute("currentPage", map.get("currentPage"));
+		model.addAttribute("lastPage", map.get("lastPage"));
+		model.addAttribute("startPageNum", map.get("startPageNum"));
+		model.addAttribute("lastPageNum", map.get("lastPageNum"));
+		model.addAttribute("pageViewBlock", map.get("pageViewBlock"));
+		model.addAttribute("pageViewArray", map.get("pageViewArray"));
+		
+		
 		return "/librarypage/bookReport/bookReportSearchList";
 
 	}
@@ -30,7 +55,24 @@ public class BookReportController {
 	 * @author 최지혜
 	 */
 	@GetMapping("/lifrary/myBookReportSearchList")
-	public String myBookReportSearchList() {
+	public String myBookReportSearchList(@RequestParam Map<String, Object> params
+			   							 ,@RequestParam(value = "currentPage", required = false, defaultValue = "1") String currentPageStr
+			   							 ,HttpSession session, Model model) {
+		
+		String libNum = (String) session.getAttribute("LIBNUM");
+		String uId = (String) session.getAttribute("SID");
+		params.put("libNum", libNum);
+		params.put("uId", uId);
+	
+		Map<String, Object> map = bookReportService.myBookReportSearchList(params, currentPageStr);
+
+		model.addAttribute("myReporList", map.get("myReporList"));
+		model.addAttribute("currentPage", map.get("currentPage"));
+		model.addAttribute("lastPage", map.get("lastPage"));
+		model.addAttribute("startPageNum", map.get("startPageNum"));
+		model.addAttribute("lastPageNum", map.get("lastPageNum"));
+		model.addAttribute("pageViewBlock", map.get("pageViewBlock"));
+		model.addAttribute("pageViewArray", map.get("pageViewArray"));
 
 		return "/librarypage/bookReport/myBookReportSearchList";
 
