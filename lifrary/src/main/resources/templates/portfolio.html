@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<title>도전정신을 가진 신입개발자</title>
+	<meta charset="UTF-8">
+	<meta name="description" content="Civic - CV Resume">
+	<meta name="keywords" content="resume, civic, onepage, creative, html">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<!-- Favicon -->   
+	<link th:href="@{/portfolioStatic/img/favicon.ico}" rel="shortcut icon"/>
+
+	<!-- Google Fonts -->
+	<link th:href="@{https://fonts.googleapis.com/css?family=Josefin+Sans:400,400i,600,600i,700}" rel="stylesheet">
+
+	<!-- Stylesheets -->
+	<link rel="stylesheet" th:href="@{/portfolioStatic/css/bootstrap.min.css}"/>
+	<link rel="stylesheet" th:href="@{/portfolioStatic/css/font-awesome.min.css}"/>
+	<link rel="stylesheet" th:href="@{/portfolioStatic/css/flaticon.css}"/>
+	<link rel="stylesheet" th:href="@{/portfolioStatic/css/owl.carousel.css}"/>
+	<link rel="stylesheet" th:href="@{/portfolioStatic/css/magnific-popup.css}"/>
+	<link rel="stylesheet" th:href="@{/portfolioStatic/css/style.css}"/>
+
+
+	<!--[if lt IE 9]>
+	  <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+	  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+	<![endif]-->
+	
+	<style>
+      img.face { 
+        position: absolute;
+        left: 150px;
+      }
+
+	  .hero-text h2 {
+		font-size: 35px;
+	  }
+	  .hero-text p {
+		font-size: 25px;
+	  }
+	  .resume-list h2 {
+		font-size: 32px;
+	  }
+	  .section-title h2 {
+		font-size: 30px;
+	  }	
+	  .single-review h4{
+	  	margin-bottom: 10px;
+	  }
+    </style>
+</head>
+<body>
+	<!-- Page Preloder -->
+	<div id="preloder">
+		<div class="loader"></div>
+	</div>
+	
+	<!-- Header section start -->
+	<header class="header-section">
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-md-4">
+					<div class="site-logo">
+						<h2>Introduce</h2>
+						<p>CHOI JI HYE</p>
+					</div>
+				</div>
+				<div class="col-md-8 text-md-right header-buttons">
+					<a th:href="@{/portfolioStatic/file/Lifrary_portfolio.pdf}" class="site-btn">프로젝트 PDF</a>
+					<!-- <a th:href="@{/portfolioStatic/file/Lifrary_portfolio.pdf}" class="site-btn">개인 담당 PDF</a> -->
+				</div>
+			</div>
+		</div>
+	</header>
+	<!-- Header section end -->
+
+	<!-- Hero section start -->
+	<section class="hero-section spad">
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-xl-10 offset-xl-1">
+					<div class="row">
+						<div class="col-lg-6">
+							<div class="hero-text">
+								<h2>생각을 결과로 만드는 개발자 "최지혜"</h2>
+								<p>시작점이 다르더라도 도전정신과 노력으로 앞서가는 신입개발자가 되겠습니다.</p>
+							</div>
+							<div class="hero-info">
+								<h2>Profile</h2>
+								<ul>
+									<li><span>Date of Birth</span>1992.08.28</li>
+									<li><span>Address</span>전라북도 전주시 덕진구 </li>
+									<li><span>E-mail</span>cc_jj_hh@naver.com</li>
+									<li><span>Phone </span>010.6770.3104</li>
+								</ul>
+							</div>
+						</div>
+						<div class="col-lg-6">
+							<figure class="hero-image">
+								<img th:src="@{/portfolioStatic/img/img.jpg}" alt="이미지를 찾을 수 없습니다" style="max-width: 70%;" class="face">
+							</figure>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!-- Hero section end -->
+	<!-- Resume section start -->
+	<section class="resume-section with-bg spad">
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-xl-7 offset-xl-2">
+					<div class="section-title">
+						<h2>Education</h2>
+					</div>
+					<ul class="resume-list">
+						<li>
+							<h2> 2019-07 ~ 2020-01 </h2>
+							<h3 >응용 소프트웨어 개발자 양성과정 </h3>
+							<h4> 한국스마트정보교육원 </h4>
+							<p>▶교육활동:</p>
+							<p>sql활용(mysql, mybatis)</p>
+							<p>데이터베이스 구현(mysql, oracle)</p>
+							<p>요구사항 확인</p>
+							<p>데이터 입출력 구현(java, model1, model2)</p>
+							<p>통합구현(spring mvc)</p>
+							<p>정보시스템 이행</p>
+							<p>제품소프트웨어 패키징</p>
+							<p>서버프로그램 구현(Apache tomcat)</p>
+							<p>애플리케이션 테스트 수행(단위테스트, 통합테스트)</p>
+							<p>애플리케이션 배포(cafe24)</p>
+							<p>프로그래밍 언어활용(기초문법)</p>
+							<p>응용 SW기초 기술 활용</p>
+							<p>화면설계</p>
+							<p>애플리케이션 테스트 관리</p>
+							<p>인터페이스 구현</div>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!-- Resume section end -->
+	<!-- Extra section start -->
+	<section class="extra-section spad pb-0">
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-xl-8 offset-xl-2">
+					<div class="section-title">
+						<h2 style="margin-bottom: 30px;">My Skills</h2>
+					</div>
+					<div class="row">
+						<div class="col-lg-4 col-md-6 pt-5">
+							<div class="fact-box trans">
+								<div class="fact-content">
+									<div class="circle-progress">
+										<div id="progress1" class="prog-circle"></div>
+										<div class="progress-info">
+											<h2>90%</h2>
+										</div>
+										<div class="prog-title">
+											<h3>JAVA</h3>
+										</div>			
+									</div>
+								</div>
+							</div>	
+						</div>
+						<div class="col-lg-4 col-md-6 pt-5">
+							<div class="fact-box trans">
+								<div class="fact-content">
+									<div class="circle-progress">
+										<div id="progress2" class="prog-circle"></div>
+										<div class="progress-info">
+											<h2>90%</h2>
+										</div>
+										<div class="prog-title">
+											<h3>SQL</h3>
+										</div>			
+									</div>
+								</div>	
+							</div>
+						</div>
+						<div class="col-lg-4 col-md-6 pt-5">
+							<div class="fact-box trans">
+								<div class="fact-content">
+									<div class="circle-progress">
+										<div id="progress3" class="prog-circle"></div>
+										<div class="progress-info">
+											<h2>85%</h2>
+										</div>
+										<div class="prog-title">
+											<h3>HTML/CSS</h3>
+										</div>			
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="col-lg-4 col-md-6 pt-5">
+							<div class="fact-box trans">
+								<div class="fact-content">
+									<div class="circle-progress">
+										<div id="progress4" class="prog-circle"></div>
+										<div class="progress-info">
+											<h2>90%</h2>
+										</div>
+										<div class="prog-title">
+											<h3>JAVASCRIPT</h3>
+										</div>			
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="col-lg-4 col-md-6 pt-5">
+							<div class="fact-box trans">
+								<div class="fact-content">
+									<div class="circle-progress">
+										<div id="progress5" class="prog-circle"></div>
+										<div class="progress-info">
+											<h2>90%</h2>
+										</div>
+										<div class="prog-title">
+											<h3>JQUERY</h3>
+										</div>			
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="col-lg-4 col-md-6 pt-5">
+							<div class="fact-box trans">
+								<div class="fact-content">
+									<div class="circle-progress">
+										<div id="progress6" class="prog-circle"></div>
+										<div class="progress-info">
+											<h2>85%</h2>
+										</div>
+										<div class="prog-title">
+											<h3>AJAX</h3>
+										</div>			
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!-- Extra section end -->
+	<!-- Review section start -->
+	<section class="review-section spad pb-0">
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-xl-7 offset-xl-2">
+					<div class="section-title">
+						<h2>Team Project</h2>
+					</div>
+					<div class="review-slider owl-carousel">
+						<div class="single-review">
+							<div class="qut">1</div>
+							<h3>주제</h3>
+							<h4>전국민 독서량 증진과 도서관 방문율을 향상시키는 전국 도서관 통합 관리 시스템</h4>
+						</div>
+						<div class="single-review">
+							<div class="qut">2</div>
+							<h3>프로젝트 목적</h3>
+							<h4>1. 개인 독서 공간 제공과 목표량 및 포인트 제도를 도입하여 지속적인 독서량 증진과 도서관 방문을 늘리게 한다.</h4>
+							<h4>2. 도서관리 단순화와 일괄된 도서관페이지 관리 시스템으로 효율적이고 통일된 관리를 목표로 한다.</h4>
+							<h4>3. 전국 도서관간의 데이터를 공유하여 다양한 통계와 자료를 제공한다.</h4>
+						</div>
+						<div class="single-review">
+							<div class="qut">3</div>
+							<h3>프로젝트 기대효과</h3>
+							<h4>1. 나만의 독서공간을 마련하여 독서 상황을 기록할 수 있으며, 포인트 제도를 도입하여 도서관사이트를 지속적으로 이용하게 할 수 있다</h4>
+							<h4>2. 도서정보 반입과 도서관에 따른 청구기호 생성 등 간편한 도서 등록 시스템으로 빠른 작업이 가능하며, 적은 인원으로도 도서관리를 할 수 있다.</h4>
+							<h4>3. 다양한 문화행사, 강좌 제공 및 편리한 공공시설 예약시스템으로 이용자들이 증가하는것을 기대할 수 있다.</h4>
+						</div>
+						<div class="single-review">
+							<div class="qut">4</div>
+							<h3>개발과정</h3>
+							<h4>• 시스템구조도작성</h4>
+							<h4>• 기능정의</h4>
+							<h4>• 프로세스정의 및 Data사전</h4>
+							<h4>• 상세자료입력</h4>
+							<h4>• 테이블스키마</h4>
+							<h4>• ERD작성</h4>
+							<h4>• Query문장테스트</h4>
+							<h4>• UI설계</h4>
+							<h4>• 네이밍규칙</h4>
+							<h4>• 구현</h4>
+							<h4>• 배포</h4>
+						</div>
+						<div class="single-review">
+							<div class="qut">5</div>
+							<h3>프로젝트 기능</h3>
+							<h4>1. 로그인/로그아웃 관리</h4>
+							<h4>2. 회원관리(회원관리, 등급, 권한)</h4>
+							<h4>3. 사서관리(사서관리, 사서이용자관리)</h4>
+							<h4>4. 포인트관리</h4>
+							<h4>5. 도서관리(수서, 소장도서)</h4>
+							<h4>6. 대출/예약/반납 관리</h4>
+							<h4>7. 공공시설 관리</h4>
+							<h4>8. 독서기록 관리</h4>
+							<h4>9. 관내 행사 관리</h4>
+							<h4>10. 공공시설 예약 관리</h4>
+							<h4>11. 게시판</h4>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!-- Review section end -->
+	<!-- Portfolio section start -->
+	<section class="portfolio-section spad pb-0">
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-xl-4 col-md-8 offset-xl-2 ">
+					<div class="section-title">
+						<h2>Portfolio</h2>
+					</div>
+				</div>
+				<div class="col-md-4 text-md-right">
+					<a th:href="@{/}" class="site-btn mb-5">포트폴리오 전체보기</a>
+				</div>
+			</div>
+			<div class="portfolio-warp" style="margin-bottom: 100px;">
+				<div class="row">
+					<div class="col-xl-6 col-lg-6 col-md-6">
+						<div class="portfolio-item">
+							<a th:href="@{/portfolioStatic/img/portfolio/myCalender.png}" class="set-bg port-pic" data-setbg="/portfolioStatic/img/portfolio/myCalender.png"></a>
+							<h2>마이페이지-북 캘린더</h2>
+							<p>목표량 설정 및 독서 일정을 기록하는 북캘린더</p>
+						</div>
+					</div>
+					<div class="col-xl-6 col-lg-6 col-md-6">
+						<div class="portfolio-item">
+							<a th:href="@{/portfolioStatic/img/portfolio/lendSearchList.png}" class="set-bg port-pic" data-setbg="/portfolioStatic/img/portfolio/lendSearchList.png"></a>
+							<h2>관리자페이지-대출/반납관리</h2>
+							<p>대출/반납 등록 및 대출/반납 도서 리스트</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!-- Portfolio section end -->
+	<!-- Footer section start -->
+	<footer class="footer-section">
+		<div class="container text-center">
+			<div class="copyright"><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+	Copyright &copy;<script>
+	document.write(new Date().getFullYear());</script>
+    All rights reserved | Made with 
+	<i class="fa fa-heart-o" aria-hidden="true"></i> 
+	by <a th:href="@{https://colorlib.com}" target="_blank">Colorlib</a>
+	 &amp; distirbuted by <a th:href="@{https://themewagon.com}" target="_blank">ThemeWagon</a>
+<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+</div>
+		</div>
+	</footer>
+	<!-- Footer section end -->
+
+
+	<!--====== Javascripts & Jquery ======-->
+	<script th:src="@{/portfolioStatic/js/jquery-2.1.4.min.js}"></script>
+	<script th:src="@{/portfolioStatic/js/bootstrap.min.js}"></script>
+	<script th:src="@{/portfolioStatic/js/owl.carousel.min.js}"></script>
+	<script th:src="@{/portfolioStatic/js/magnific-popup.min.js}"></script>
+	<script th:src="@{/portfolioStatic/js/circle-progress.min.js}"></script>
+	<script th:src="@{/portfolioStatic/js/main.js}"></script>
+</body>
+</html>
