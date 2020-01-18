@@ -11,20 +11,135 @@
  	.ck-editor__editable {
 	    min-height: 400px;  
 	}
-	.radio label {
-	padding-left: 20px;
-	margin-bottom: 5px;
-	display: inline;
+	#bookInsertModal .select-list{
+ 		display: block; 
+ 		position: inherit;
+ 		border-top: 3px solid #f4f4f4;
+ 		margin-top: 5px;
+ 	}
+ 	.radio label {
+		padding-left: 20px;
+		margin-bottom: 5px;
+		display: inline;
 	}
+ 	#star span{
+ 	 color: #6b6b6b;
+ 	 cursor: pointer;
+ 	}
+ 	#star span.on{
+ 	 color: #ff7236;
+ 	}
  	</style>
 	<script type="text/javascript" th:src="@{/libraryStatic/ckeditor/ckeditor.js}"></script>
  	<script type="text/javascript" >
  	 $(document).ready(function(){
- 		 $('#reportBtn').click(function(){
- 			
- 			 $('#reportForm').submit();
- 		  
+ 		 var bookInfoList = [];
+ 		 var selectBook = [];
+ 		 //도서 검색 & 검색 리스트
+		 $('#bookInfoBtn').click(function(){
+			
+			//리스트출력부분 초기화
+			$('#bookInsertModal').find('ul').css("display","none").html('');
+			
+			var biName = $('#bookName').val();
+			var request = $.ajax({
+	   		  url: "/lifrary/booKInfo",
+	   		  data: { biName : biName },
+	   		  method: "POST",
+	   		  dataType: "json"
+	   		});
+	   		 
+	   		request.done(function( data ) {
+	   			bookInfoList = data;
+	   			//리턴값 있는 경우 리스트출력
+	   			if(data.length > 0){
+				   	for(var i = 0; i<data.length; i++){
+				   		var list = data[i];
+				 		var ul = $('#bookInsertModal').find('ul');
+				 		ul.css("display","block");
+				   		ul.append('<li></li>');
+				   		var li = ul.children('li').eq(i);
+				   		li.text(list.biName);
+				   		li.attr('value',i); 
+				   	}
+	   			}
+	   			//리턴값 없는 경우 
+	   			else{
+	 	   			var ul = $('#bookInsertModal').find('ul');
+	 	   			ul.css("display","block");
+			   		ul.append('<li></li>');
+			   		var li = ul.children('li')
+			   		li.text('검색조건에 맞는 도서가 없습니다');
+			   		li.css( "height", "50px" );
+			   		li.css( "text-align", "center" );	
+			   	}
+			});//request.done
+	   		 
+	   		request.fail(function( jqXHR, textStatus ) {
+	   		  alert('검색도서 정보를 불러오는데 실패하였습니다');
+	   		});//request.fail
+		 });
+		 
+		 //도서검색 리스트 클릭시 해당 도서 정보 화면에 출력
+		 $('#bookInsertModal').on('click','li',function(){
+			 $('#bookInsertModal').find('ul').css("display","none");
+
+			 var liText = $(this).text();//검색도서명
+			 $('#bookInsertModal input').eq(0).val(liText);
+   			
+			 var i = $(this).val();
+   			 selectBook = bookInfoList[i];//검색도서 정보
+   			 
+   			 //검색도서 정보 화면에 출력
+   			 $('#bookInsertModal strong').eq(1).text(selectBook.biName);//도서명
+   			 $('#bookInsertModal strong').eq(3).text(selectBook.biIsbn);//ISBN
+   			 $('#bookInsertModal strong').eq(5).text(selectBook.biAuthor);//저자명
+   			 $('#bookInsertModal strong').eq(7).text(selectBook.biPublisher);//발행자
+   			 
+   		 });
+		$('#insertBtn').click(function(){
+			$('.library-info').find('span').text('');
+			$('#bookInsertModal').modal("hide"); //닫기 
+			$('.library-info').find('span').eq(0).append(selectBook.biName);
+ 			$('.library-info').find('span').eq(1).append(selectBook.biIsbn);
+ 			$('[name="biIsbn"]').val(selectBook.biIsbn);
+ 			 		  
  	 	});
+		$('#star span').click(function(){
+			$(this).parent().children('span').removeClass('on');
+			$(this).addClass('on').prevAll('span').addClass('on');
+			$('[name="bReportStar"]').val($(this).index());
+			return false;
+	     });
+ 		$('#reportBtn').click(function(){
+ 			var reportContent = CKEDITOR.instances.reportEditor.getData();
+			var reportContentHtml = $('[name="bReportContent"]').val(reportContent);
+			
+			var isbn = $('[name="biIsbn"]').val();
+			var title = $('[name="bReportTitle"]').val();
+			var content = $('[name="bReportContent"]').val();
+			var inputContent = $('#inputContent');
+
+			if(isbn == null || isbn == ""){
+				alert('도서를 등록해주세요.');
+			}else if(title == null || title == ""){
+				alert('제목을 입력해주세요.');
+			}else if(content == null || content == ""){
+				alert('내용을 입력해주세요');
+			}else{							
+				$('#reportForm').submit();
+			}
+ 	 	});
+ 		 
+ 		//모달 초기화
+		 $('.modal').on('hidden.bs.modal', function (e) {
+			$('.modal ul').css('display','none').html('');
+			$('.modal input').val('');//검색어 초기화
+			$('.modal strong').eq(1).text('');//도서명
+			$('.modal strong').eq(3).text('');//ISBN
+			$('.modal strong').eq(5).text('');//저자명
+			$('.modal strong').eq(7).text('');//발행자
+		}); 
  	});
  	</script>
  </th:block>  
@@ -62,50 +177,48 @@
 		                                    <div class="col-xs-12 col-sm-6 account-option">
 		                                        <strong>도서정보</strong>
 		                                        <ul>
-		                                            <li><a href="#">도서등록</a></li>
-		                                            <li class="divider">|</li>
-		                                            <li><a href="#">도서 수정</a></li>
+		                                            <li><a href="#bookInsertModal" data-toggle="modal">도서등록</a></li>
 		                                        </ul>
 		                                    </div>
 		                                    <div class="col-xs-12 col-sm-6 library-info">
 		                                        <ul>
-		                                            <li><strong>도서명:</strong></li>
-		                                            <li>
-		                                            	<strong>ISBN:</strong>
-		                                                <a href="#"></a>
-		                                            </li>
+		                                            <li><strong>도서명:</strong><span></span></li>
+		                                            <li><strong>ISBN:</strong><span></span></li>
 		                                        </ul>
 		                                    </div>
 		                                    <div class="clearfix"></div>
 		                                </div>
 	                                     <div class="entry-content">
-			                             	<form id="reportForm" th:action="@{/lifrary/myBookReportSearchList}" >
+			                             	<form id="reportForm" th:action="@{/lifrary/bookReportInsert}" method="post">
 		                                        <div class="form-group">
 		                                        	<label for="keywords">제목</label>
-				                                    <input class="form-control" type="text" placeholder="제목을 입력해주세요">
+				                                    <input class="form-control" type="text" name="bReportTitle" placeholder="제목을 입력해주세요">
 			                               	   </div>
 		                                        <div class="form-group">
 		                                        	<label for="keywords">내용</label>
 				                                    <textarea name="reportContent" id="reportEditor" rows="10" ></textarea>
 			                               	   </div>
 			                               	    <div class="form-group">  
-			                                     	<div class="rating">
+			                                     	<div id="star">
                                                         <strong>나만의 별점:</strong>&nbsp; 
-                                                        <span>☆</span>
-                                                        <span>☆</span>
-                                                        <span>☆</span>
-                                                        <span>☆</span>
-                                                        <span>☆</span>
+                                                        <span>★</span>
+                                                        <span>★</span>
+                                                        <span>★</span>
+                                                        <span>★</span>
+                                                        <span>★</span>
                                                     </div>
 			                               		</div>
 			                               	   <div class="form-group radio">  
 			                               	   		 <strong>공개여부:</strong>&nbsp;
-				                                      <input id="open" type="radio" value="O" name="reportOpen">
+				                                      <input id="open" type="radio" value="O" name="bReportOpen" checked="checked">
                                                       <label for="open">공개&nbsp;</label>
-				                                      <input id="no" type="radio" value="X" name="reportOpen">
+				                                      <input id="no" type="radio" value="X" name="bReportOpen">
                                                       <label for="no">비공개</label>
 			                               		</div>
-			                               	   <div class="form-group">  
+			                               	   <div class="form-group">
+			                               	   		 <input type="hidden" name="biIsbn">
+			                               	   		 <input type="hidden" name="bReportContent">
+			                               	   		 <input type="hidden" name="bReportStar" value="0">
 				                                     <button type="button" id="reportBtn" class="btn btn-primary">작성</button> 
 			                               		</div>
 			                               </form>
@@ -118,6 +231,58 @@
                 </main>
             </div>
         </div>
+        <div class="modal fade" id="bookInsertModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		  <div class="modal-dialog">
+		  	  <div class="modal-content">	
+		      <div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		        <h4 class="modal-title" id="myModalLabel">도서 등록</h4>
+		      </div>
+		      <div class="modal-body">
+		      	  <div class="row">
+	                  <div class="col-md-12">
+	                  	<div class="col-sm-8">
+	                       	<input id="bookName" class="form-control" type="text" placeholder="검색예 : 해리">
+		                    <ul class="select-list" style="display: none;">
+			                </ul>
+	                  	</div>
+	                  	<div class="col-sm-4">
+	                       	<button type="button" id="bookInfoBtn" class="btn btn-primary form-control" >도서검색</button>
+	                  	</div>
+                  	 </div>
+                  	 <div class="col-md-12">
+	                  	<div class="col-sm-6">
+	                  	   <p class="form-row form-row form-row-wide" style="margin-top: 20px;">
+	                       	<strong>도서명:</strong>&nbsp;<strong></strong>
+	                       </p>
+	                  	</div>
+	                  	<div class="col-sm-6">
+	                  	   <p class="form-row form-row form-row-wide" style="margin-top: 20px;">
+	                       	<strong>ISBN:</strong>&nbsp;<strong></strong>
+	                       </p>
+	                  	</div>
+                  	 </div>
+                  	 <div class="col-md-12">
+	                  	<div class="col-sm-6">
+	                  	   <p class="form-row form-row form-row-wide">
+	                       	<strong>저자명:</strong>&nbsp;<strong></strong>
+	                       </p>
+	                  	</div>
+	                  	<div class="col-sm-6">
+	                  	   <p class="form-row form-row form-row-wide">
+	                       	<strong>발행사:</strong>&nbsp;<strong></strong>
+	                       </p>
+	                  	</div>
+                  	 </div>
+                 </div>
+		      </div>
+		      <div class="modal-footer">
+		        <button type="button" class="btn btn-dark-gray" data-dismiss="modal" aria-label="Close">닫기</button>
+		        <button type="button" id="insertBtn" class="btn btn-primary" >등록</button>
+		      </div>
+		      </div>
+		  </div>
+		</div>
 	     <script type="text/javascript">
 			 CKEDITOR.replace('reportEditor'
 			                , {height: 500                                                  

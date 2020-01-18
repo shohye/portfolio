@@ -105,7 +105,7 @@ button {
 				$('#nsbtn').click(function(){
 					var boardContent = CKEDITOR.instances.boardContent.getData();
 					var boardContentHtml = $('input[name="boardContent"]').val(boardContent);
-					console.log(boardContentHtml.val());
+					
 					var boardTitleval = $('#boardTitle').val();
 					var inputContent = $('#inputContent');
 					if(boardTitleval == null || boardTitleval == ""){

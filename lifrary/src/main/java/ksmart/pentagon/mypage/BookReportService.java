@@ -5,11 +5,14 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import ksmart.pentagon.vo.BookInformation;
+import ksmart.pentagon.vo.BookReport;
 import ksmart.pentagon.vo.Paging;
 
 @Service
@@ -63,7 +66,7 @@ public class BookReportService {
 		return resultMap;
 		
 	}
-public Map<String, Object> myBookReportSearchList(Map<String, Object> params, String currentPageStr) {
+	public Map<String, Object> myBookReportSearchList(Map<String, Object> params, String currentPageStr) {
 		
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(new Date());
@@ -115,6 +118,11 @@ public Map<String, Object> myBookReportSearchList(Map<String, Object> params, St
 		return resultMap;
 		
 	}
-	
+	public List<BookInformation> booKInfo(String biName){
+		return bookReportMapper.booKInfo(biName);
+	}
+	public int bookReportInsert(BookReport bookreport) {
+		return bookReportMapper.bookReportInsert(bookreport);
+	}
 
 }

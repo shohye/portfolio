@@ -25,7 +25,8 @@ public class LibraryInterceptor implements HandlerInterceptor{
         			("/lifrary/myCalender").equals(uri)||("/lifrary/myBookReportSearchList").equals(uri)||
         			("/lifrary/myStudyList").equals(uri)||("/lifrary/programApplyList").equals(uri)||
         			("/lifrary/myReadingRoomReserveList").equals(uri)||("/lifrary/myStudyRoomReserveList").equals(uri)||
-        			("/lifrary/myLectureRoomReserveList").equals(uri)||("/lifrary/myLockerReserveList").equals(uri)) {
+        			("/lifrary/myLectureRoomReserveList").equals(uri)||("/lifrary/myLockerReserveList").equals(uri)||
+        			("/lifrary/bookReportInsert").equals(uri)) {
 	            String SID = (String) session.getAttribute("SID");
 	            //로그인 한 경우
 	            if(SID != null) {

@@ -17,6 +17,12 @@
 	    <result column="b_page_view" property="bPageView"/>
 	    <result column="b_report_date" property="bReportDate"/>
 	</resultMap>
+	 <resultMap type="ksmart.pentagon.vo.BookInformation" id="bookInfo">
+	    <result column="bi_isbn"      property="biIsbn"/>
+	    <result column="bi_name"      property="biName"/>
+	    <result column="bi_publisher"      property="biPublisher"/>
+	    <result column="bi_author"    property="biAuthor"/>
+ </resultMap>
 	<select id="bookReportCnt" parameterType="java.util.HashMap" resultType="java.lang.Integer">
 		SELECT 
 			COUNT(1)
@@ -133,4 +139,47 @@
 	            LIMIT #{startRow},#{rowPerPage}
         </if>	
  	</select>
+ 	<select id="booKInfo" parameterType="java.lang.String" resultMap="bookInfo">
+ 	SELECT 
+		bi_isbn
+		, bi_name
+		, bi_publisher
+		, bi_author
+	FROM book_information
+	WHERE
+		bi_name Like CONCAT ('%',#{biName},'%')			
+ 	</select>
+ 	<insert id="bookReportInsert" parameterType="ksmart.pentagon.vo.BookReport">
+ 		<selectKey keyProperty="bReportCode" resultType="java.lang.String" order="BEFORE">
+		  	SELECT 
+			CONCAT('br-',DATE_FORMAT(CURDATE(), '%y%m%d'),
+				(IF(DATE_FORMAT(CURDATE(),'%y%m%d') > LEFT(SUBSTRING_INDEX(MAX(br.b_report_code), '-', -1),6) 
+				, '00001' 
+				,LPAD(RIGHT(MAX(br.b_report_code),5)+1,5,'0')))) AS bReportCode
+			FROM 
+				book_report as br
+		</selectKey>
+		INSERT INTO book_report(
+			b_report_code
+			, l_code
+			, u_id
+			, bi_isbn
+			, b_report_title
+			, b_report_content
+			, b_report_open
+			, b_report_star
+			, b_page_view
+			, b_report_date)
+		VALUES (
+			#{bReportCode}
+			, #{lCode}
+			, #{uId}
+			, #{biIsbn}
+			, #{bReportTitle}
+			, #{bReportContent}
+			, #{bReportOpen}
+			, #{bReportStar}
+			, 0
+			, CURDATE())
+ 	</insert>
   </mapper>
