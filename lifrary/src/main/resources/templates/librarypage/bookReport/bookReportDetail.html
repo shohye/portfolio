@@ -64,10 +64,10 @@
                                         <article>
                                             <div class="blog-detail" th:with="BR=${bookReport}">
                                                 <header class="entry-header">
-                                            <!--         <div class="blog_meta_category">
-                                                        <a href="#." rel="category tag">어떤걸로</a>, 
-                                                        <a href="#." rel="category tag">응용할까</a>
-                                                    </div> -->
+                                            		<div class="blog_meta_category">
+                                                        <span style="color: #282828"><i class="fa fa-book"></i>[[${BR.biName}]]</span>
+                                                        <a th:href="@{/lifrary/bookDataSearchList(biIsbn=${BR.biIsbn})}" ><i class="fa fa-search"></i>도서검색</a>
+                                                    </div>
                                                     <h2 class="entry-title" th:text="${BR.bReportTitle}"></h2>
                                                     <div class="entry-meta">
                                                         <span th:with="name = ${#strings.replace(BR.uName,#strings.substring(BR.uName,1,2),'*')}" ><i class="fa fa-user"></i>&nbsp;[[${name}]]</span><span>[[${BR.bReportDate}]]</span>
@@ -92,11 +92,13 @@
                                                             <a><i class="fa fa-comment"></i>[[${BR.commentCnt}]]</a>
                                                             <a><i class="fa fa-eye"></i>[[${BR.bPageView}]]</a>
                                                         </div>
-                                                        <!-- <div class="post-social-share">
+                                                        <th:block th:if="${session.SID eq BR.uId}">
+                                                        <div class="post-social-share">
                                                             <ul>
-                                                                <li><a href="#."><i class="fa fa-pencil-square-o"></i><span>수정하기</span></a></li>
+                                                                <li><a th:href="@{/lifrary/bookReportUpdate(bReportCode=${BR.bReportCode})}"><i class="fa fa-pencil-square-o"></i><span>수정하기</span></a></li>
                                                             </ul>
-                                                        </div> -->
+                                                        </div>
+                                                        </th:block>
                                                         <div class="clearfix"></div>
                                                     </div>
                                                     <div class="entry-content" th:utext = "${BR.bReportContent}">
@@ -179,7 +181,7 @@
                                                            </a>
                                                        </div>
                                                        <div class="comment-content">
-                                                           <p></p>
+                                                       		<p></p>
                                                        </div>
                                                    </footer>
                                                </div>

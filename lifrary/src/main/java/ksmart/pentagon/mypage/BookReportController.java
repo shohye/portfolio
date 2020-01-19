@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import ksmart.pentagon.vo.BookInformation;
 import ksmart.pentagon.vo.BookReport;
@@ -136,5 +137,36 @@ public class BookReportController {
 		
 		return "/librarypage/bookReport/bookReportDetail";
 
+	}
+	
+	@GetMapping("/lifrary/bookReportUpdate")
+	public String bookReportUpdate(@RequestParam(value = "bReportCode") String bReportCode
+									,Model model) {
+		
+		model.addAttribute("bookReport", bookReportService.getBookReport(bReportCode));
+		
+		return "/librarypage/bookReport/bookReportUpdate";
+	}
+	@PostMapping("/lifrary/bookReportUpdate")
+	public String bookReportUpdate(BookReport bookreport
+								  ,RedirectAttributes redirectAttributes) {
+
+		int result = bookReportService.bookReportUpdate(bookreport);
+		
+		if(result == 1) {
+			redirectAttributes.addAttribute("bReportCode", bookreport.getbReportCode());
+			return "redirect:/lifrary/bookReportDetail";
+		}else {
+			return "/librarypage/bookReport/bookReportUpdate";
+		}
+	}
+	@GetMapping("/lifrary/bookReportDelete")
+	public String bookReportDelete(@RequestParam(value = "bReportCode") String bReportCode
+								   ,RedirectAttributes redirectAttributes) {
+		
+		int result = bookReportService.bookReportDelete(bReportCode);
+		redirectAttributes.addFlashAttribute("deleteresult", result);
+		
+		return "redirect:/lifrary/myBookReportSearchList";
 	}
 }

@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html 	xmlns:th="http://www.thymeleaf.org"
+		xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+		layout:decorate="~{layout/library/libraryDefault}">
+ <th:block layout:fragment="libraryTitle">
+	<title>독후감 수정</title>
+ </th:block>
+    
+ <th:block layout:fragment="customScript">
+ 	<style>
+ 	.ck-editor__editable {
+	    min-height: 400px;  
+	}
+	#bookInsertModal .select-list{
+ 		display: block; 
+ 		position: inherit;
+ 		border-top: 3px solid #f4f4f4;
+ 		margin-top: 5px;
+ 	}
+ 	.radio label {
+		padding-left: 20px;
+		margin-bottom: 5px;
+		display: inline;
+	}
+ 	#star span{
+ 	 color: #6b6b6b;
+ 	 cursor: pointer;
+ 	}
+ 	#star span.on{
+ 	 color: #ff7236;
+ 	}
+ 	</style>
+	<script type="text/javascript" th:src="@{/libraryStatic/ckeditor/ckeditor.js}"></script>
+ 	<script type="text/javascript" th:inline="javascript">
+ 	 $(document).ready(function(){
+ 		 
+ 		/*<![CDATA[*/
+			var bookReport = [[ ${bookReport} ]];//독후감
+			/*]]*/
+			var bReportOpen = bookReport.bReportOpen;
+			if(bReportOpen == 'O'){
+				$('[name="bReportOpen"]').eq(0).prop("checked", true);
+			}else{
+				$('[name="bReportOpen"]').eq(1).prop("checked", true);
+			} 		
+ 		
+			var bReportStar = bookReport.bReportStar;
+			for(var i=0; i < bReportStar; i++){
+		  		$('#star span').eq(i).addClass('on');
+		  	}
+ 	
+		$('#star span').click(function(){
+			$(this).parent().children('span').removeClass('on');
+			$(this).addClass('on').prevAll('span').addClass('on');
+			$('[name="bReportStar"]').val($(this).index());
+			return false;
+	     });
+ 		$('#reportBtn').click(function(){
+ 			var reportContent = CKEDITOR.instances.reportEditor.getData();
+			$('[name="bReportContent"]').val(reportContent);
+			
+			var title = $('[name="bReportTitle"]').val();
+			var content = $('[name="bReportContent"]').val();
+			
+			if(title == null || title == ""){
+				alert('제목을 입력해주세요.');
+			}else if(content == null || content == ""){
+				alert('내용을 입력해주세요');
+			}else{							
+				$('#reportForm').submit();
+			}
+ 	 	});
+ 		 
+ 	});
+ 	</script>
+ </th:block>  
+    <th:block layout:fragment="customContents">
+       <section class="page-banner services-banner">
+            <div class="container">
+                <div class="banner-header">
+                    <h2>BOOK REPORT</h2>
+                    <span class="underline center"></span>
+                    <p class="lead">내 손끝에서 피어나는 또 다른 작품</p>
+                </div>
+                <div class="breadcrumb">
+                    <ul>
+                        <li><a>독후감</a></li>
+                        <li>독후감 작성</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+        <div id="content" class="site-content">
+            <div id="primary" class="content-area">
+                <main id="main" class="site-main">
+                    <div class="services-main">
+                        <div class="services-pg">                            
+                            <section class="services-offering">
+                                <div class="container">
+	                                <div class="row">
+	                                	<th:block th:with="BR=${bookReport}">
+	                                    <div class="center-content">
+	                                        <h2 class="section-title">My Book Report</h2>
+	                                        <span class="underline center"></span>
+	                                        <p class="lead"></p>
+	                                        <div class="clearfix"></div>
+	                                    </div>
+	                                    <div class="cart-head">
+		                                    <div class="col-xs-12 col-sm-6 account-option">
+		                                        <strong>도서정보</strong>
+		                                    </div>
+		                                    <div class="col-xs-12 col-sm-6 library-info">
+		                                        <ul>
+		                                            <li><strong>도서명:</strong><span th:text="${BR.biName}"></span></li>
+		                                            <li><strong>ISBN:</strong><span th:text="${BR.biIsbn}"></span></li>
+		                                        </ul>
+		                                    </div>
+		                                    <div class="clearfix"></div>
+		                                </div>
+	                                     <div class="entry-content">
+			                             	<form id="reportForm" th:action="@{/lifrary/bookReportUpdate}" method="post">
+		                                        <div class="form-group">
+		                                        	<label for="keywords">제목</label>
+				                                    <input class="form-control" type="text" name="bReportTitle" th:value="${BR.bReportTitle}">
+			                               	   </div>
+		                                        <div class="form-group">
+		                                        	<label for="keywords">내용</label>
+				                                    <textarea name="reportContent" id="reportEditor" rows="10" th:utext="${BR.bReportContent}"></textarea>
+			                               	   </div>
+			                               	    <div class="form-group">  
+			                                     	<div id="star">
+                                                        <strong>나만의 별점:</strong>&nbsp; 
+                                                        <span>★</span>
+                                                        <span>★</span>
+                                                        <span>★</span>
+                                                        <span>★</span>
+                                                        <span>★</span>
+                                                    </div>
+			                               		</div>
+			                               	   <div class="form-group radio">  
+			                               	   		 <strong>공개여부:</strong>&nbsp;
+				                                      <input id="open" type="radio" value="O" name="bReportOpen">
+                                                      <label for="open">공개&nbsp;</label>
+				                                      <input id="no" type="radio" value="X" name="bReportOpen">
+                                                      <label for="no">비공개</label>
+			                               		</div>
+			                               	   <div class="form-group">
+			                               	   		 <input type="hidden" name="bReportCode" th:value="${BR.bReportCode}">
+			                               	   		 <input type="hidden" name="bReportContent">
+			                               	   		 <input type="hidden" name="bReportStar" th:value="${BR.bReportStar}">
+				                                     <button type="button" id="reportBtn" class="btn btn-primary">수정</button> 
+			                               		</div>
+			                               </form>
+	                                   </div>
+	                                </th:block>   
+	                                </div>
+                                </div>
+                            </section>
+                          </div>
+                     </div> 
+                </main>
+            </div>
+        </div>
+	     <script type="text/javascript">
+			 CKEDITOR.replace('reportEditor'
+			                , {height: 500                                                  
+			                 });
+		</script>
+    </th:block>
+</html>

@@ -136,10 +136,10 @@
                                               <td th:text="${MRL.bReportDate}"></td>
                                               <td th:text="${MRL.bPageView}"></td>
                                               <td>
-                                             	<a href="#" class="badge" style="background-color:#02BC77;">
+                                             	<a th:href="@{/lifrary/bookReportUpdate(bReportCode=${MRL.bReportCode})}" class="badge" style="background-color:#02BC77;">
                                                 	<i class="fa fa-pencil"></i>수정
                                                 </a>
-                                                <a href="#" class="badge">
+                                                <a th:href="@{/lifrary/bookReportDelete(bReportCode=${MRL.bReportCode})}" class="badge">
                                                     <i class="fa fa-times"></i>삭제
                                                 </a>
                                              </td>                                                  

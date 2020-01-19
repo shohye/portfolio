@@ -6,6 +6,7 @@ public class BookReport {
 	private String uId;
 	private String uName;
 	private String biIsbn;
+	private String biName;
 	private String biImg;
 	private String bReportTitle;
 	private String bReportContent;
@@ -43,6 +44,12 @@ public class BookReport {
 	}
 	public void setBiIsbn(String biIsbn) {
 		this.biIsbn = biIsbn;
+	}
+	public String getBiName() {
+		return biName;
+	}
+	public void setBiName(String biName) {
+		this.biName = biName;
 	}
 	public String getBiImg() {
 		return biImg;

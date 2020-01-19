@@ -30,4 +30,10 @@ public interface BookReportMapper {
 	public BookReport bookReportDetail(String bReportCode);
 	//댓글 리스트
 	public List<BoardComment> bookReportComment(String bReportCode);
+	//독후감 정보
+	public BookReport getBookReport(String bReportCode);
+	//독후감 수정
+	public int bookReportUpdate(BookReport bookreport);
+	//독후감 삭제
+	public int bookReportDelete(String bReportCode);
 }

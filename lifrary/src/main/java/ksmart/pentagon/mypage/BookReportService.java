@@ -138,5 +138,16 @@ public class BookReportService {
 		
 		return map;
 	}
-
+	public BookReport getBookReport (String bReportCode) {
+		
+		return bookReportMapper.getBookReport(bReportCode);
+		
+	}
+	public int bookReportUpdate(BookReport bookreport) {
+		
+		return bookReportMapper.bookReportUpdate(bookreport);
+	}
+	public int bookReportDelete (String bReportCode) {
+		return bookReportMapper.bookReportDelete(bReportCode);
+	}
 }

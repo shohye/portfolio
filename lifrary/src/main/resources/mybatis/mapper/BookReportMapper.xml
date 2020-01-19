@@ -9,6 +9,7 @@
 	    <result column="u_id" property="uId"/>
 	    <result column="u_name" property="uName"/>
 	    <result column="bi_isbn" property="biIsbn"/>
+	    <result column="bi_name" property="biName"/>
 	    <result column="bi_img" property="biImg"/>
 	    <result column="b_report_title" property="bReportTitle"/>
 	    <result column="b_report_content" property="bReportContent"/>
@@ -85,7 +86,7 @@
 			]]>	
 		</if>
 		<if test="startRow neq null and rowPerPage neq null"> 
-	            ORDER BY br.b_report_date  DESC
+	            ORDER BY br.b_report_code  DESC
 	            LIMIT #{startRow},#{rowPerPage}
         </if>	
  	</select>
@@ -109,7 +110,7 @@
 				AND br.b_report_date >= #{svDate}
 			]]>	
 		</if>
-		ORDER BY br.b_report_date  DESC	
+		ORDER BY br.b_report_code  DESC	
 	</select>
 	<select id="myBookReportList" resultMap="bookReport" parameterType="java.util.HashMap">
   		SELECT 
@@ -146,7 +147,7 @@
 			]]>	
 		</if>
 		<if test="startRow neq null and rowPerPage neq null"> 
-	            ORDER BY br.b_report_date  DESC
+	            ORDER BY br.b_report_code  DESC
 	            LIMIT #{startRow},#{rowPerPage}
         </if>	
  	</select>
@@ -189,7 +190,7 @@
 			, #{bReportTitle}
 			, #{bReportContent}
 			, #{bReportOpen}
-			, #{bReportStar}
+			, ${bReportStar}
 			, 0
 			, CURDATE())
  	</insert>
@@ -204,6 +205,7 @@
  		SELECT br.b_report_code
 				, br.u_id
 				, u.u_name
+				, bi.bi_name
 				, br.bi_isbn
 				, br.b_report_title
 				, br.b_report_content
@@ -214,6 +216,8 @@
 		FROM book_report AS br
 		INNER JOIN user AS u
 		ON br.u_id = u.u_id
+		INNER JOIN book_information AS bi
+		ON br.bi_isbn = bi.bi_isbn
 		WHERE br.b_report_code = #{bReportCode}
  	</select>
  	<select id="bookReportComment" parameterType="java.lang.String" resultMap="boardComment">
@@ -232,4 +236,35 @@
 		WHERE b_report_code = #{bReportCode}
 		ORDER BY bc.board_c_date desc
  	</select>
+ 	<select id="getBookReport" parameterType="java.lang.String" resultMap="bookReport" >
+ 		SELECT br.b_report_code
+				, br.bi_isbn
+				, bi.bi_name
+				, br.b_report_title
+				, br.b_report_content
+				, br.b_report_open
+				, br.b_report_star
+				, br.b_page_view
+				, br.b_report_date
+		FROM book_report AS br
+		INNER JOIN user AS u
+		ON br.u_id = u.u_id
+		INNER JOIN book_information AS bi
+		ON br.bi_isbn = bi.bi_isbn
+		WHERE br.b_report_code = #{bReportCode}
+ 	</select>
+ 	<update id="bookReportUpdate" parameterType="ksmart.pentagon.vo.BookReport">
+ 		UPDATE book_report
+		SET
+			b_report_title= #{bReportTitle},
+			b_report_content= #{bReportContent},
+			b_report_open= #{bReportOpen},
+			b_report_star= ${bReportStar}
+		WHERE 
+			b_report_code = #{bReportCode}
+ 	</update>
+ 	<delete id="bookReportDelete" parameterType="java.lang.String">
+ 		DELETE FROM book_report 
+		WHERE b_report_code=#{bReportCode}
+ 	</delete>
   </mapper>

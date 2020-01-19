@@ -113,17 +113,18 @@
 	     });
  		$('#reportBtn').click(function(){
  			var reportContent = CKEDITOR.instances.reportEditor.getData();
-			var reportContentHtml = $('[name="bReportContent"]').val(reportContent);
+			$('[name="bReportContent"]').val(reportContent);
 			
 			var isbn = $('[name="biIsbn"]').val();
 			var title = $('[name="bReportTitle"]').val();
 			var content = $('[name="bReportContent"]').val();
-			var inputContent = $('#inputContent');
 
 			if(isbn == null || isbn == ""){
 				alert('도서를 등록해주세요.');
 			}else if(title == null || title == ""){
 				alert('제목을 입력해주세요.');
+			}else if(title.length > 30){
+				alert('제목은 30자 이하로 적어 주세요.');
 			}else if(content == null || content == ""){
 				alert('내용을 입력해주세요');
 			}else{							
