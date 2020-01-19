@@ -5,6 +5,7 @@ public class BoardComment {
 		private String boardCCode;		//댓글코드
 		private String lCode;			//도서관코드
 		private String uId;				//아이디
+		private String uName;			//이름
 		private String boardCode;		//게시글내용 코드
 		private String bReportCode;		//독후감코드
 		private String boardCContent;	//내용
@@ -28,6 +29,12 @@ public class BoardComment {
 		}
 		public void setuId(String uId) {
 			this.uId = uId;
+		}
+		public String getuName() {
+			return uName;
+		}
+		public void setuName(String uName) {
+			this.uName = uName;
 		}
 		public String getBoardCode() {
 			return boardCode;

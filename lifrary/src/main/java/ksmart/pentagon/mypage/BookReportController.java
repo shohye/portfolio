@@ -126,8 +126,14 @@ public class BookReportController {
 	 * @author 최지혜
 	 */
 	@GetMapping("/lifrary/bookReportDetail")
-	public String bookReportDetail() {
-
+	public String bookReportDetail(@RequestParam(value = "bReportCode") String bReportCode
+									,Model model) {
+		
+		Map<String, Object> result = bookReportService.bookReportDetail(bReportCode);
+		
+		model.addAttribute("bookReport", result.get("bookReport"));
+		model.addAttribute("BoardComment", result.get("BoardComment"));
+		
 		return "/librarypage/bookReport/bookReportDetail";
 
 	}

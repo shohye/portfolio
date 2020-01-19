@@ -120,11 +120,11 @@
 	                                              <th:block th:if="${#lists.size(bookReporList)} > 0">
 	                                                  <tr th:each="BRL,C : ${bookReporList}">
 	                                                  	<td th:text="${C.count}">번호</td>
-	                                                  	<td th:text="${BRL.uName}"></td>
+	                                                  	<td href="#" th:text="${#strings.replace(BRL.uName,#strings.substring(BRL.uName,1,2),'*')}"></td>
 	                                                      <td>
 	                                                      	 <div>
 											         	 		<img th:src="${BRL.biImg}" alt="이미지준비중/">
-											         	 		<a th:href="@{/lifrary/bookReportDetail}" style="cursor: pointer;">
+											         	 		<a th:href="@{/lifrary/bookReportDetail(bReportCode=${BRL.bReportCode})}" style="cursor: pointer;">
 											         	 			<span th:text="${#strings.abbreviate(BRL.bReportTitle,25)}"></span>
 											         	 		</a>
 											         	 	 </div>

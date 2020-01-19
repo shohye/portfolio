@@ -11,7 +11,9 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import ksmart.pentagon.vo.BoardComment;
 import ksmart.pentagon.vo.BookInformation;
+import ksmart.pentagon.vo.BookLend;
 import ksmart.pentagon.vo.BookReport;
 import ksmart.pentagon.vo.Paging;
 
@@ -123,6 +125,18 @@ public class BookReportService {
 	}
 	public int bookReportInsert(BookReport bookreport) {
 		return bookReportMapper.bookReportInsert(bookreport);
+	}
+	public Map<String, Object> bookReportDetail(String bReportCode) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		int result = bookReportMapper.viewUpdate(bReportCode);
+		BookReport bookReport = bookReportMapper.bookReportDetail(bReportCode);
+		List<BoardComment> boardComment = bookReportMapper.bookReportComment(bReportCode);
+		
+		map.put("bookReport", bookReport);
+		map.put("BoardComment", boardComment);
+		
+		return map;
 	}
 
 }

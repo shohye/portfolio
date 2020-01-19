@@ -16,6 +16,7 @@
 	    <result column="b_report_star" property="bReportStar"/>
 	    <result column="b_page_view" property="bPageView"/>
 	    <result column="b_report_date" property="bReportDate"/>
+	    <result column="comment_cnt" property="commentCnt"/>
 	</resultMap>
 	 <resultMap type="ksmart.pentagon.vo.BookInformation" id="bookInfo">
 	    <result column="bi_isbn"      property="biIsbn"/>
@@ -23,6 +24,16 @@
 	    <result column="bi_publisher"      property="biPublisher"/>
 	    <result column="bi_author"    property="biAuthor"/>
  </resultMap>
+ <resultMap type="ksmart.pentagon.vo.BoardComment" id="boardComment">	
+		<result property="boardCCode" column="board_c_code"/>				
+		<result property="lCode" column="l_code"/>							
+		<result property="uId" column="u_id"/>	
+		<result property="uName" column="u_name"/>	
+		<result property="bReportCode" column="b_report_code"/>				
+		<result property="boardCContent" column="board_c_content"/>			
+		<result property="boardCOpen" column="board_c_open"/>				
+		<result property="boardCDate" column="board_c_date"/>				
+	</resultMap>
 	<select id="bookReportCnt" parameterType="java.util.HashMap" resultType="java.lang.Integer">
 		SELECT 
 			COUNT(1)
@@ -182,4 +193,43 @@
 			, 0
 			, CURDATE())
  	</insert>
+ 	<update id="viewUpdate" parameterType="java.lang.String">
+ 		UPDATE
+			book_report
+		SET
+			b_page_view = book_report.b_page_view + 1
+		WHERE b_report_code = #{boardCode}
+ 	</update>
+ 	<select id="bookReportDetail" parameterType="java.lang.String" resultMap="bookReport" >
+ 		SELECT br.b_report_code
+				, br.u_id
+				, u.u_name
+				, br.bi_isbn
+				, br.b_report_title
+				, br.b_report_content
+				, br.b_report_star
+				, br.b_page_view
+				, br.b_report_date
+				,(SELECT COUNT(1) FROM  board_comment AS bc WHERE bc.b_report_code = br.b_report_code) AS comment_cnt
+		FROM book_report AS br
+		INNER JOIN user AS u
+		ON br.u_id = u.u_id
+		WHERE br.b_report_code = #{bReportCode}
+ 	</select>
+ 	<select id="bookReportComment" parameterType="java.lang.String" resultMap="boardComment">
+ 		SELECT bc.board_c_code
+				, bc.u_id
+				, u.u_name
+				, bc.b_report_code
+				, bc.board_c_content
+				, bc.board_c_open
+				, bc.board_c_date
+		FROM 
+			board_comment AS bc
+		INNER JOIN 
+			user AS u
+		ON bc.u_id = u.u_id	
+		WHERE b_report_code = #{bReportCode}
+		ORDER BY bc.board_c_date desc
+ 	</select>
   </mapper>

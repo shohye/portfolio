@@ -128,7 +128,7 @@
                                             <td>
                                                <div>
 		         	 						 		<img th:src="${MRL.biImg}" alt="이미지준비중/">
-								         	 		<a th:href="@{/lifrary/bookReportDetail}" style="cursor: pointer;">
+								         	 		<a th:href="@{/lifrary/bookReportDetail(bReportCode=${MRL.bReportCode})}" style="cursor: pointer;">
 								         	 			<span th:text="${#strings.abbreviate(MRL.bReportTitle,25)}"></span>
 								         	 		</a>
 								         	 	 </div>

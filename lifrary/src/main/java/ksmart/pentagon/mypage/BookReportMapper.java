@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import ksmart.pentagon.vo.BoardComment;
 import ksmart.pentagon.vo.BookInformation;
 import ksmart.pentagon.vo.BookReport;
 
@@ -23,4 +24,10 @@ public interface BookReportMapper {
 	public List<BookInformation> booKInfo(String biName);
 	//독후감 등록
 	public int bookReportInsert(BookReport bookreport);
+	//독후감 조회수 증가
+	public int viewUpdate(String bReportCode); 
+	//독후감 상세
+	public BookReport bookReportDetail(String bReportCode);
+	//댓글 리스트
+	public List<BoardComment> bookReportComment(String bReportCode);
 }

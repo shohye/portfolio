@@ -13,6 +13,7 @@ public class BookReport {
 	private int bReportStar;
 	private int bPageView;
 	private String bReportDate;
+	private int commentCnt;
 	public String getbReportCode() {
 		return bReportCode;
 	}
@@ -85,18 +86,12 @@ public class BookReport {
 	public void setbReportDate(String bReportDate) {
 		this.bReportDate = bReportDate;
 	}
-	@Override
-	public String toString() {
-		return "BookReport [bReportCode=" + bReportCode + ", lCode=" + lCode + ", uId=" + uId + ", uName=" + uName
-				+ ", biIsbn=" + biIsbn + ", biImg=" + biImg + ", bReportTitle=" + bReportTitle + ", bReportContent="
-				+ bReportContent + ", bReportOpen=" + bReportOpen + ", bReportStar=" + bReportStar + ", bPageView="
-				+ bPageView + ", bReportDate=" + bReportDate + ", getbReportCode()=" + getbReportCode()
-				+ ", getlCode()=" + getlCode() + ", getuId()=" + getuId() + ", getuName()=" + getuName()
-				+ ", getBiIsbn()=" + getBiIsbn() + ", getBiImg()=" + getBiImg() + ", getbReportTitle()="
-				+ getbReportTitle() + ", getbReportContent()=" + getbReportContent() + ", getbReportOpen()="
-				+ getbReportOpen() + ", getbReportStar()=" + getbReportStar() + ", getbPageView()=" + getbPageView()
-				+ ", getbReportDate()=" + getbReportDate() + ", getClass()=" + getClass() + ", hashCode()=" + hashCode()
-				+ ", toString()=" + super.toString() + "]";
+	public int getCommentCnt() {
+		return commentCnt;
 	}
+	public void setCommentCnt(int commentCnt) {
+		this.commentCnt = commentCnt;
+	}
+	
 	
 }
